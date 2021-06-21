@@ -1,16 +1,23 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Player : MonoBehaviour
 {
     private CharacterController _controller;
+
+    private float _yVelocity;
+    private bool _canDoubleJump;
+
     [SerializeField] private float _gravity = 1.0f;
     [SerializeField] private float _speed = 5;
     [SerializeField] private float _jumpHight = 15.0f;
-    private float _yVelocity;
-    private bool _canDoubleJump;
     [SerializeField] private int _coins;
+    [SerializeField] private int _lives;
+
+   
+
     private UIManager _uiManager;
 
     void Start()
@@ -22,6 +29,8 @@ public class Player : MonoBehaviour
         {
             Debug.Log("UI Manager is NULL!");
         }
+
+        _uiManager.UpdateLivesDisplay(_lives);
     }
 
     void Update()
@@ -68,5 +77,17 @@ public class Player : MonoBehaviour
                 break;
         }
         _uiManager.UpdateCoinDisplay(_coins);
+    }
+
+    public void Damage()
+    {
+        _lives--;
+
+        _uiManager.UpdateLivesDisplay(_lives);
+
+        if (_lives < 1)
+        {
+            SceneManager.LoadScene(0);
+        }
     }
 }
