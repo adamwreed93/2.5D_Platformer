@@ -16,7 +16,6 @@ public class MovingPlatform : MonoBehaviour
     {
         if (_switching == false)
         {
-
             transform.position = Vector3.MoveTowards(transform.position, _targetB.position, _speed * Time.deltaTime);
         }
         else if (_switching == true)
